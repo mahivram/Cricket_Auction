@@ -7,6 +7,7 @@ import { AddPlayerModal } from "./components/AddPlayerModal";
 import { SettingsModal } from "./components/SettingsModal";
 import { PresetsModal } from "./components/PresetsModal";
 import type { Category, Player, Stage, Team } from "./types";
+import siteLogo from "./assets/site-logo/WhatsApp Image 2026-0ds1-17 at 3.10.28 PM.jpeg";
 
 const makeId = () => `p-${Math.random().toString(36).slice(2, 8)}`;
 
@@ -662,7 +663,7 @@ function App() {
       {stage !== "auction" && (
         <header className="app-header compact">
           <div className="logo-frame">
-            <img src="src\assets\site-logo\WhatsApp Image 2026-0ds1-17 at 3.10.28 PM.jpeg" alt="LDPL" className="site-logo" />
+            <img src={siteLogo} alt="LDPL" className="site-logo" />
           </div>
           <div className="stage-pill">
             {stage === "pool" ? "Player Pool" : stage === "results" ? "Results" : "Live Auction"}
