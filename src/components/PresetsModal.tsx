@@ -25,6 +25,8 @@ export function PresetsModal({
       const newTeam = {
         id: Date.now().toString(),
         name: teamName,
+        budget: 150000,
+        roster: [],
         logo: undefined,
       };
       const updated = [...teamList, newTeam];
