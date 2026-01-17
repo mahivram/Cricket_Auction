@@ -1,0 +1,183 @@
+/* Shared modal styles */
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 40;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(2px);
+}
+
+.modal {
+  background: linear-gradient(140deg, rgba(18, 24, 40, 0.95), rgba(25, 37, 64, 0.95));
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 18px;
+  padding: 2rem;
+  max-width: 500px;
+  width: 90%;
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+}
+
+.modal-head {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+
+.modal-head > div {
+  display: flex;
+  flex-direction: column;
+  gap: 0.3rem;
+}
+
+.modal-head h3 {
+  margin: 0;
+  font-size: 1.3rem;
+}
+
+.modal-head button {
+  align-self: flex-start;
+}
+
+.modal-actions {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.5rem;
+  flex-wrap: wrap;
+}
+
+.preset-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
+  gap: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.field-help {
+  color: #9fb1d2;
+  font-size: 0.9rem;
+  margin: 0 0 1rem;
+}
+
+.preset-section {
+  margin-bottom: 2rem;
+}
+
+.team-input-group {
+  display: flex;
+  gap: 0.6rem;
+  margin-bottom: 1rem;
+}
+
+.team-input {
+  flex: 1;
+  padding: 0.7rem;
+  border-radius: 10px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  background: #e6ebf5;
+  color: #0b1528;
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.team-input:focus {
+  outline: none;
+  border-color: rgba(91, 209, 255, 0.5);
+  box-shadow: 0 0 8px rgba(91, 209, 255, 0.2);
+}
+
+.team-management-list {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-height: 400px;
+  overflow-y: auto;
+  padding-right: 0.5rem;
+}
+
+.team-management-item {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+}
+
+.team-logo-preview {
+  width: 60px;
+  height: 60px;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.08);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  flex-shrink: 0;
+}
+
+.team-logo-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.no-logo {
+  color: #7a8ab8;
+  font-size: 0.8rem;
+}
+
+.team-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 0.4rem;
+}
+
+.team-management-name {
+  font-weight: 700;
+  color: #d9e4ff;
+  font-size: 0.95rem;
+}
+
+.logo-upload-label {
+  cursor: pointer;
+  display: inline-block;
+}
+
+.upload-text {
+  color: #5bd1ff;
+  font-size: 0.85rem;
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.logo-upload-label:hover .upload-text {
+  color: #7addff;
+}
+
+.team-management-list::-webkit-scrollbar {
+  width: 6px;
+}
+
+.team-management-list::-webkit-scrollbar-track {
+  background: rgba(255, 255, 255, 0.05);
+  border-radius: 10px;
+}
+
+.team-management-list::-webkit-scrollbar-thumb {
+  background: rgba(91, 209, 255, 0.3);
+  border-radius: 10px;
+}
+
+.team-management-list::-webkit-scrollbar-thumb:hover {
+  background: rgba(91, 209, 255, 0.5);
+}

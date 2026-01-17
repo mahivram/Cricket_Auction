@@ -1,0 +1,26 @@
+:root {
+  font-family: 'Sora', 'Inter', 'Segoe UI', system-ui, -apple-system, sans-serif;
+  line-height: 1.4;
+  font-weight: 500;
+  color: #e9eeff;
+  background: radial-gradient(circle at 20% 20%, #1a253f 0, #0f1626 40%),
+    radial-gradient(circle at 80% 0, #1c2b47 0, transparent 35%),
+    #0b1120;
+  min-height: 100vh;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: transparent;
+}
+
+a {
+  color: inherit;
+}
