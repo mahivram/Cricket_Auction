@@ -61,6 +61,7 @@ function App() {
   const [settingsOpen, setSettingsOpen] = useState(false);
   const [playerModalOpen, setPlayerModalOpen] = useState(false);
   const [settingsMode, setSettingsMode] = useState<"edit" | "add">("edit");
+  const [searchQuery, setSearchQuery] = useState("");
   const [editPlayerId, setEditPlayerId] = useState<string>("");
   const [playerForm, setPlayerForm] = useState<{
     name: string;
@@ -244,12 +245,20 @@ function App() {
   }, [teams]);
 
   const pooledByCategory = useMemo(() => {
-    return players.reduce<Record<string, Player[]>>((acc, player) => {
+    // Filter players based on search query
+    const filtered = players.filter(
+      (player) =>
+        player.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        player.category.toLowerCase().includes(searchQuery.toLowerCase()) ||
+        player.role.toLowerCase().includes(searchQuery.toLowerCase())
+    );
+
+    return filtered.reduce<Record<string, Player[]>>((acc, player) => {
       if (!acc[player.category]) acc[player.category] = [];
       acc[player.category].push(player);
       return acc;
     }, {});
-  }, [players]);
+  }, [players, searchQuery]);
 
   const clearBannerLater = () => {
     window.setTimeout(() => setBanner(null), 3000);
@@ -710,6 +719,9 @@ function App() {
           </div>
           <div className="actions">
             <button onClick={openAddPlayer}>Add player</button>
+            <button className="ghost" onClick={() => setStage("pool")}>
+              Dashboard
+            </button>
             <button className="ghost" onClick={() => setPresetsOpen(true)}>
               Presets
             </button>
@@ -728,15 +740,25 @@ function App() {
       )}
 
       {stage === "pool" && (
-        <section className="pool-grid">
-          {Object.entries(pooledByCategory)
-            .sort(([catA], [catB]) => {
-              // Move "Unsold" to the end
-              if (catA === "Unsold") return 1;
-              if (catB === "Unsold") return -1;
-              return 0;
-            })
-            .map(([category, players]) => (
+        <>
+          <div className="search-bar-container">
+            <input
+              type="text"
+              className="search-bar"
+              placeholder="Search players by name, category, or role..."
+              value={searchQuery}
+              onChange={(e) => setSearchQuery(e.target.value)}
+            />
+          </div>
+          <section className="pool-grid">
+            {Object.entries(pooledByCategory)
+              .sort(([catA], [catB]) => {
+                // Move "Unsold" to the end
+                if (catA === "Unsold") return 1;
+                if (catB === "Unsold") return -1;
+                return 0;
+              })
+              .map(([category, players]) => (
             <div className="panel" key={category}>
               <div className="panel-head">
                 <h2>{category}</h2>
@@ -790,7 +812,8 @@ function App() {
               </div>
             </div>
           ))}
-        </section>
+          </section>
+        </>
       )}
 
       {stage === "auction" && (
