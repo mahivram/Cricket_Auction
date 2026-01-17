@@ -227,7 +227,7 @@ function App() {
     window.setTimeout(() => setBanner(null), 3000);
   };
 
-  const openSettings = (playerId?: string) => {
+  const openSettings = () => {
     // Open SettingsModal for clearing data
     setSettingsOpen(true);
   };
