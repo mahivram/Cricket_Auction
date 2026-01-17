@@ -158,6 +158,21 @@ function App() {
     };
   }, []);
 
+  // Manage body overflow when modals are open
+  useEffect(() => {
+    const isModalOpen =
+      playerModalOpen || settingsOpen || presetsOpen;
+    if (isModalOpen) {
+      document.body.style.overflow = "hidden";
+    } else {
+      document.body.style.overflow = "";
+    }
+
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [playerModalOpen, settingsOpen, presetsOpen]);
+
   const loadImageFile = (file: File, onReady: (url: string) => void) => {
     const reader = new FileReader();
     reader.onload = () => {
