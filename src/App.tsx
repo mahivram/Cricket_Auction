@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useState, useRef } from "react";
 import "./App.css";
 import { AuctionView } from "./components/AuctionView";
 import { ResultsView } from "./components/ResultsView";
@@ -129,7 +129,8 @@ function App() {
       return [];
     }
   });
-
+  const finalizeSaleTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const markUnsoldTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   useEffect(() => {
     localStorage.setItem("unsoldPlayers", JSON.stringify(unsoldPlayers));
   }, [unsoldPlayers]);
@@ -145,6 +146,17 @@ function App() {
   useEffect(() => {
     localStorage.setItem("auctionCategoryBase", JSON.stringify(categoryBase));
   }, [categoryBase]);
+
+  useEffect(() => {
+    return () => {
+      if (finalizeSaleTimeoutRef.current) {
+        clearTimeout(finalizeSaleTimeoutRef.current);
+      }
+      if (markUnsoldTimeoutRef.current) {
+        clearTimeout(markUnsoldTimeoutRef.current);
+      }
+    };
+  }, []);
 
   const loadImageFile = (file: File, onReady: (url: string) => void) => {
     const reader = new FileReader();
@@ -374,6 +386,11 @@ function App() {
       return;
     }
 
+    const playerName = activePlayer.name;
+    const teamName = currentTeam.name;
+    const teamLogo = currentTeam.logo;
+    const bidAmount = currentBid;
+
     setTeams((prev) =>
       prev.map((team) =>
         team.id === currentTeam.id
@@ -392,13 +409,17 @@ function App() {
     // Show sold seal with team logo
     setShowSoldSeal(true);
     setSoldInfo({
-      playerName: activePlayer.name,
-      teamName: currentTeam.name,
-      teamLogo: currentTeam.logo,
-      bid: currentBid,
+      playerName: playerName,
+      teamName: teamName,
+      teamLogo: teamLogo,
+      bid: bidAmount,
     });
 
-    setTimeout(() => {
+    if (finalizeSaleTimeoutRef.current) {
+      clearTimeout(finalizeSaleTimeoutRef.current);
+    }
+
+    finalizeSaleTimeoutRef.current = setTimeout(() => {
       setShowSoldSeal(false);
       setCurrentBid(null);
       setCurrentLeader(null);
@@ -410,7 +431,7 @@ function App() {
 
     setBanner({
       type: "success",
-      message: `${activePlayer.name} sold to ${currentTeam.name} for ${currentBid.toLocaleString()} pts.`,
+      message: `${playerName} sold to ${teamName} for ${bidAmount.toLocaleString()} pts.`,
     });
     clearBannerLater();
   };
@@ -470,7 +491,11 @@ function App() {
       playerName: activePlayer.name,
     });
 
-    setTimeout(() => {
+    if (markUnsoldTimeoutRef.current) {
+      clearTimeout(markUnsoldTimeoutRef.current);
+    }
+
+    markUnsoldTimeoutRef.current = setTimeout(() => {
       setShowUnsoldSeal(false);
       resetAuction();
     }, 2500);
